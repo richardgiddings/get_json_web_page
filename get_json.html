@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Get JSON data from URL</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width" initial-scale="1.0">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" 
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="renderjson.js"></script>
+        <script>
+        $(document).ready(function(){
+            $("#get-button").click(function() {
+                // Example URL - https://opendata.bristol.gov.uk/api/records/1.0/search/?dataset=planning-applications-since2010-test&facet=extractdate&facet=publisherlabel&facet=organisationlabel&facet=casereference&facet=casedate&facet=servicetypelabel&facet=classificationlabel&facet=casetext&facet=locationtext&facet=decisiontargetdate&facet=status&facet=coordinatereferencesystem&facet=decisiondate&facet=decision&facet=decisiontype&facet=decisionnoticedate&facet=geoarealabel&facet=groundarea&facet=agent
+                var url = $("#url").val()
+                $.getJSON(url, function( data ) {
+                    document.getElementById("data").appendChild(
+                        renderjson.set_icons('+', '-')
+                                  .set_show_to_level(1)
+                                  .set_max_string_length(50)(data)
+                    );
+                });
+            });
+            $("#reset-button").click(function() {
+                $("#data").empty();
+            });
+        });
+        </script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="form-group mt-3">
+                <input type="text" placeholder="Enter URL here" id="url" class="form-control">
+            </div>
+            <input type="button" id="get-button" value="Get" class="btn btn-primary btn-lg btn-block">
+            <input type="button" id="reset-button" value="Reset" class="btn btn-warning btn-lg btn-block">
+            <div id="data" class="mt-3"></div>
+        </div>
+    </dody>
+</html>
